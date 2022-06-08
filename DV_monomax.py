@@ -7,7 +7,7 @@ import json
 url = 'https://monomax.by/map'
 
 # отправка GET-запроса на сайт и сохранение полученного в переменной page
-page = requests.get(url)
+page = requests.get(url, verify=False)
 
 # применение BeautifulSoup к переменной page
 data = BeautifulSoup(page.text, 'html.parser')

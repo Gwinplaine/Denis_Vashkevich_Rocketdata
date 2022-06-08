@@ -7,7 +7,7 @@ import json
 url = 'https://www.ziko.pl/lokalizator/'
 
 # отправка GET-запроса на сайт и сохранение полученного в переменной page
-page = requests.get(url)
+page = requests.get(url, verify=False)
 
 # применение BeautifulSoup к переменной page
 data = BeautifulSoup(page.text, 'html.parser')
@@ -98,3 +98,4 @@ result = [{"address": final_addresses_list[i], "latlon": geocoder.arcgis(final_a
 # сохранение результирующего элемента в json-файл
 with open ('ziko.json', 'w', encoding='utf-8') as file:
     json.dump(result, file, ensure_ascii=False)
+    
