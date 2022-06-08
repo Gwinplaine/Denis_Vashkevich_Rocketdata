@@ -8,12 +8,12 @@ KFC_final_list = []
 KFC_names_check = []
 
 # итерирование по url ресторанов
-for i in range(1,2000):
+for i in range(1, 2000):
     # сохранение URL в переменной url + /номер ресторана
     url = 'https://www.kfc.ru/restaurants/' + str(i)
 
     # отправка GET-запроса на сайт и сохранение полученного в переменной page
-    page = requests.get(url)
+    page = requests.get(url, verify=False)
 
     # применение BeautifulSoup к переменной page
     data = BeautifulSoup(page.text, 'html.parser')
