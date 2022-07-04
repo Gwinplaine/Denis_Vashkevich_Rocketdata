@@ -22,29 +22,29 @@ allhours = data.findAll('td', class_='mp-table-hours')
 # пустой список для внесения неотформатированный строки времени работы аптек
 list_for_time = []
 
-#внесение в пустой список часов работы каждой аптеки
+# внесение в пустой список часов работы каждой аптеки
 for hours in allhours:
     list_for_time.append(hours.text.split(' ')[0:-1])
 
-#пустой список для внесения итогового отформатированного времени работы аптек
+# пустой список для внесения итогового отформатированного времени работы аптек
 working_time_list = []
 
-#итерирование по списку неотформатированного времени, форматирование времени, внесение его в список итогового отформатированного времени
+# итерирование по списку неотформатированного времени, форматирование времени, внесение его в список итогового отформатированного времени
 for time in list_for_time:
     lst_time_final = []
     if len(time) == 8:
-        letter = time[0] + ' ' + time[1] + '-' + time[3] + ' ' + time[4][0:3] + ' ' + time[5] + ' ' + '-' + ' '+time[7]
-        lst_time_final.append(time[0] + ' ' + time[1] + '-' + time[3])
-        lst_time_final.append(time[4][0:3] + ' ' + time[5] + ' ' + '-' + ' '+time[7])
+        letter = f"{time[0]} {time[1]}-{time[3]} {time[4][0:3]} {time[5]} - {time[7]}"
+        lst_time_final.append(f"{time[0]} {time[1]}-{time[3]}")
+        lst_time_final.append(f"{time[4][0:3]} {time[5]} - {time[7]}")
     elif len(time) == 13:
-        lst_time_final.append(time[0] + ' ' + time[1] + '-' + time[3])
-        lst_time_final.append(time[4][0:3] + ' ' + time[5] + ' ' + '-' + ' '+time[7])
-        lst_time_final.append(time[8][0:3] + ' ' + time[9] + ' ' + time[10] + '-' + time[12])
+        lst_time_final.append(f"{time[0]} {time[1]}-{time[3]}")
+        lst_time_final.append(f"{time[4][0:3]} {time[5]} - {time[7]}")
+        lst_time_final.append(f"{time[8][0:3]} {time[9]} {time[10]}-{time[12]}")
     elif len(time) == 18:
-        lst_time_final.append(time[0] + ' ' + time[1] + '-' + time[3])
-        lst_time_final.append(time[4][0:3] + ' ' + time[5] + ' ' + '-' + ' '+time[7])
-        lst_time_final.append(time[8][0:3] + ' ' + time[9] + ' ' + time[10] + '-' + time[12])
-        lst_time_final.append(time[13][0:3] + ' ' + time[14] + ' ' + time[15] + '-' + time[17])
+        lst_time_final.append(f"{time[0]} {time[1]}-{time[3]}")
+        lst_time_final.append(f"{time[4][0:3]} {time[5]} - {time[7]}")
+        lst_time_final.append(f"{time[8][0:3]} {time[9]} {time[10]}-{time[12]}")
+        lst_time_final.append(f"{time[13][0:3]} {time[14]} {time[15]}-{time[17]}")
     working_time_list.append(lst_time_final)
 
 # пустой список для внесения итогового отформатированного адреса аптек
@@ -69,7 +69,7 @@ final_phones = []
 for phone in alladdresses:
     # поиск индекса 'tel.' и выборка по элементам после него
     index = phone.text.split(' ').index('tel.')
-    full_phones = phone.text.split(' ')[index+1:]
+    full_phones = phone.text.split(' ')[index + 1:]
     # если указан один телефон - итоговое форматирование и внесение в соответствующий список
     if len(full_phones) == 8:
         two_last_numbers = full_phones[3][:2]
@@ -92,10 +92,11 @@ for phone in alladdresses:
         final_phones.append(phones_list)
 
 # создание результирующего элемента
-result = [{"address": final_addresses_list[i], "latlon": geocoder.arcgis(final_addresses_list[i]).latlng, "name": allnames[i].text,
-    "phones": final_phones[i], "working_hours": working_time_list[i]} for i in range(0,len(final_addresses_list))]
+result = [{"address": final_addresses_list[i], "latlon": geocoder.arcgis(final_addresses_list[i]).latlng,
+           "name": allnames[i].text,
+           "phones": final_phones[i], "working_hours": working_time_list[i]} for i in
+          range(0, len(final_addresses_list))]
 
 # сохранение результирующего элемента в json-файл
-with open ('ziko.json', 'w', encoding='utf-8') as file:
+with open('ziko.json', 'w', encoding='utf-8') as file:
     json.dump(result, file, ensure_ascii=False)
-    

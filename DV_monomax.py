@@ -22,9 +22,10 @@ del allphones[2]
 del allphones[1]
 
 # создание результирующего элемента
-result = [{"address": alladresses[i].text, "latlon": geocoder.arcgis('Минск, '+alladresses[i].text).latlng, "name": "Мономах",
-    "phones": [allphones[i].text]} for i in range(0,len(alladresses))]
+result = [{"address": alladresses[i].text, "latlon": geocoder.arcgis('Минск, ' + alladresses[i].text).latlng,
+           "name": "Мономах",
+           "phones": [allphones[i].text]} for i in range(0, len(alladresses))]
 
-# сохранение результирующего элемента в json-файл
-with open ('monomax.json', 'w', encoding='utf-8') as file:
+# сохранение результирующего элемента в json файл
+with open('monomax.json', 'w', encoding='utf-8') as file:
     json.dump(result, file, ensure_ascii=False)
