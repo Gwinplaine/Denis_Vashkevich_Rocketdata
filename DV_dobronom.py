@@ -33,7 +33,7 @@ scrp = scrp[:scrp.index(']')]
 
 shops_info = eval(scrp)
 
-# пустой список для внесения в него результатов
+# пустой список для внесения в него результатов итерации
 dobronom_final_list = []
 
 # счётчик порядкового номера магазина
@@ -42,9 +42,9 @@ number = 0
 # итерация по каждому магазину, приведение в нужный формат и внесение в итоговый список
 for shop in shops_info:
     number += 1
-    final_voc = {"Порядковый номер": number, "Формат магазина": shop['shop_type'], "Область": shop['oblast'], "Город": shop['city'],
-                 "Адрес": shop['shop_name'], "Часы работы": shop['time'],
-                 "Координаты": shop['map']}
+    final_voc = {"Number": number, "Shop type": shop['shop_type'], "Area": shop['oblast'], "City": shop['city'],
+                 "Address": shop['shop_name'], "Working hours": shop['time'],
+                 "Coordinates": shop['map']}
     dobronom_final_list.append(final_voc)
 
 # сохранение результирующего списка в json-файл
